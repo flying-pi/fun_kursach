@@ -28,11 +28,11 @@ public:
         return outSize;
     }
 
-    inline double* getIn(){
+    inline double const* getIn(){
         return in;
     }
 
-    inline double* getOut(){
+    inline double const * getOut(){
         return out;
     }
 
@@ -40,6 +40,7 @@ public:
     virtual  void setParentLayer(Layer *parent);
     virtual void setChild(Layer *child);
     virtual void addFullConnectedNeuron(neuronFactoryMethod neuronFactory);
+    virtual void settError(double *error);
 
 
 

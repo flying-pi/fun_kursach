@@ -18,6 +18,7 @@ public:
     virtual double calcFiled(Vector *inputSize, double *input, Vector const* offset = NULL);
 
     void setSize(Vector *size);
+    virtual void calculateError(double error) ;
 
 
 signals:
@@ -30,10 +31,15 @@ protected:
     double currentSumm;
     double currentSignal;
     double *weigth = NULL;
+    double *lastIn;
+    Vector const *lastInOffset;
 
     static double sumFun(double *in,double *mask,double state){
-        return (state += (*in)*(*mask));
+        state += (*in)*(*mask);
+        return state;
     }
+
+    virtual double activationFunction(double in) = 0;
 
 };
 

@@ -21,11 +21,12 @@ Layer::Layer(int outDimenCount, int *outDimen, QObject *parent)
 }
 
 void Layer::nextStep(double *data) {
-    if(child == NULL) return;
-    for(int i=0;i<outSize->getDimensCount();i++){
-
+    in = data;
+    for(int i=0;i<outSize->getLinerLength();i++){
+        out[i] = fullConnectedNeurons->at(i)->calcFiled(inSize,in);
     }
-    child->nextStep(out);
+    if(child != NULL)
+        child->nextStep(out);
 }
 
 void Layer::setParentLayer(Layer *parent){
@@ -44,6 +45,13 @@ void Layer::addFullConnectedNeuron(neuronFactoryMethod neuronFactory)
         Neuron *newItem =neuronFactory();
         newItem->setSize(inSize);
         fullConnectedNeurons->append(newItem);
+    }
+}
+
+void Layer::settError(double *error)
+{
+    for(int i=0;i<fullConnectedNeurons->size();i++){
+        fullConnectedNeurons->at(i)->calculateError(error[i]);
     }
 }
 

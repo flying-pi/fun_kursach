@@ -9,21 +9,30 @@ Neuron::Neuron(int dimenCont, int *sizes, QObject *parent) : QObject(parent)
 
 double Neuron::calcFiled(Vector *inputSize,double *input,const Vector *offset)
 {
+    lastIn = input;
+    lastInOffset = offset;
     if(myltidimensionOperation == NULL){
         myltidimensionOperation = new MyltidimensionOperation(size,inputSize);
     }
     if(offset!=NULL){
         myltidimensionOperation->setOffsetPoint(offset->getDimenSizes());
     }
-    currentSumm = myltidimensionOperation->calc(input,weigth,sumFun);
-    currentSignal = 1.0/(1+exp(currentSumm));
+    currentSumm = myltidimensionOperation->calc(input,weigth,sumFun)+weigth[size->getLinerLength()]*1;
+    currentSignal =activationFunction(currentSumm);
     return currentSignal;
 }
 
 void Neuron::setSize(Vector *size){
     this->size  = size;
     int weigthLenth = size->getLinerLength();
-    weigth = new double[weigthLenth];
-    for(int i=0;i<weigthLenth;i++)
+    weigth = new double[weigthLenth+1];
+    for(int i=0;i<weigthLenth+1;i++){
         weigth[i] = Util::getInstance().myRand();
+        qDebug()<<weigth[i];
+    }
+}
+
+void Neuron::calculateError(double error)
+{
+
 }

@@ -41,19 +41,35 @@ void tort2(){
     qsrand((uint)time.msec());
     double *in = new double[2];
     Layer * inLayout = new Layer(1,new int[1]{2},1,new int[1]{2});
+    const double *out;
+    double *error = new double[2];
+    bool a,b,c;
     inLayout->addFullConnectedNeuron(SigmodNeuron::createItem);
-    for(int i=0;i<1000;i++){
-        in[0] =qrand()%2==0;
-        in[1] =qrand()%2==1;
+    for(int i=0;i<10000;i++){
+        a = qrand()%2==0;
+        b = qrand()%2==1;
+//        a = b = true;
+        c = (a&&b);
+        in[0] =a;
+        in[1] =b;
         inLayout->nextStep(in);
-        inLayout->getOut();
+        out= inLayout->getOut();
+
+        error[0] = ((double)c) - out[0];
+        error[1] = ((double)(!c)) - out[1];
+        qDebug()<<"\t"<<in[0]<<"|"<<in[1]<< "\t"<<out[0] << "|"<< out[1];
+        qDebug() << c << "::"<<(bool)(out[0]>out[1]);
+        qDebug()<<"#################################################################";
+
+//        qDebug()<<in[0]<<"\t"<<in[1]<< "\t"<<out[0] << "\t"<< out[1];
+        inLayout->settError(error);
     }
 
 }
 
 int main(int argc, char *argv[])
 {
-//    tort1();
+    //    tort1();
     tort2();
     if(true) return 0;
     QApplication a(argc, argv);

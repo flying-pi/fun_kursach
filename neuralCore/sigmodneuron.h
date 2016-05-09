@@ -17,6 +17,21 @@ public:
 signals:
 
 public slots:
+
+    // Neuron interface
+protected:
+    double activationFunction(double in);
+    void calculateError(double error);
+
+private:
+    const double k = 0.9;
+    const double learnSpeed = 0.6;
+
+    static double increaceW(double *in,double *mask,double state){
+        (*mask) += (*in)*state;
+        return state;
+    }
+
 };
 
 #endif // SIGMODNEURON_H

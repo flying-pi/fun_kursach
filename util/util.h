@@ -43,13 +43,12 @@ class MyltidimensionOperation{
 public:
     MyltidimensionOperation(Vector *summatorSize,Vector *inputSize);
 
-    inline double calc(double *_input,double *_summator,myltidimensionSymmator summatorFun){
+    inline double calc(double *_input,double *_summator,myltidimensionSymmator summatorFun,double state=0){
         double *input = _input;
         double *summator = _summator;
         int start = 0;
         int currentDimenStart = 1;
         int summatorSize = 1;
-        int state=0;
         for(int i=0;i<dimenCount;i++)
         {
             start+=offsetPoint[i]*currentDimenStart;
@@ -70,8 +69,6 @@ public:
                 }
             }
             state = summatorFun(input,summator,state);
-            QString str = QString::number(state);
-            qDebug()<<str;
             input++;
             summator++;
         }
