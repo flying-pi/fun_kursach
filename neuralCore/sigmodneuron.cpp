@@ -1,6 +1,6 @@
 #include "sigmodneuron.h"
 
-SigmodNeuron::SigmodNeuron(int w, int h, QObject *parent) : Neuron(w,h,parent)
+SigmodNeuron::SigmodNeuron(int dimenCont, int *sizes, QObject *parent) : Neuron(dimenCont,sizes,parent)
 {
 
 }

@@ -2,25 +2,39 @@
 #define NEURON_H
 
 #include <QObject>
-#include <QSize>
+#include "../util/vector.h"
 #include <QPoint>
+#include "../util/util.h"
+
 
 class Neuron : public QObject
 {
     Q_OBJECT
 public:
-    explicit Neuron(int w = 0,int h= 0,QObject *parent = 0);
-    QSize const* getSize(){
+    explicit Neuron(int dimenCont=0, int *sizes=NULL,QObject *parent = 0);
+    Vector const* getSize(){
         return size;
     }
-    virtual double calcFiled(QPoint const* offset,double const *input) = 0;
+    virtual double calcFiled(Vector *inputSize, double *input, Vector const* offset = NULL);
+
+    void setSize(Vector *size);
+
 
 signals:
 
 public slots:
 
 protected:
-    QSize *size;
+    Vector *size;
+    MyltidimensionOperation *myltidimensionOperation = NULL;
+    double currentSumm;
+    double currentSignal;
+    double *weigth = NULL;
+
+    static double sumFun(double *in,double *mask,double state){
+        return (state += (*in)*(*mask));
+    }
+
 };
 
 #endif // NEURON_H

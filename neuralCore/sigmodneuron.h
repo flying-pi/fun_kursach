@@ -8,7 +8,11 @@ class SigmodNeuron : public Neuron
 {
     Q_OBJECT
 public:
-    explicit SigmodNeuron(int w = 0,int h= 0,QObject *parent = 0);
+    static Neuron *createItem(){
+        return new SigmodNeuron();
+    }
+
+    explicit SigmodNeuron(int dimenCont=0, int *sizes=0,QObject *parent = 0);
 
 signals:
 

@@ -14,16 +14,18 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    util.cpp \
+    util/util.cpp \
     neuralCore/neuron.cpp \
     neuralCore/sigmodneuron.cpp \
-    neuralCore/layer.cpp
+    neuralCore/layer.cpp \
+    util/vector.cpp
 
 HEADERS  += mainwindow.h \
-    util.h \
+    util/util.h \
     neuralCore/neuron.h \
     neuralCore/sigmodneuron.h \
-    neuralCore/layer.h
+    neuralCore/layer.h \
+    util/vector.h
 
 FORMS    += mainwindow.ui
 

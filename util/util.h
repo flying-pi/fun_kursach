@@ -4,6 +4,7 @@
 #include <random>
 #include <QString>
 #include <QDebug>
+#include "vector.h"
 
 
 class Util
@@ -40,21 +41,9 @@ typedef double (*myltidimensionSymmator)(double*, double*, double);
 class MyltidimensionOperation{
 
 public:
-    MyltidimensionOperation(int dimenCount,int *summatorSize,int *inputSize){
-        this->dimenCount = dimenCount;
-        this->summatorSize = summatorSize;
-        this->inputSize = inputSize;
-        axisOffset = new int[dimenCount];
-        inputAxisOffset = new int[dimenCount];
-        axisOffset[0] = summatorSize[0];
-        inputAxisOffset[0] = inputSize[0];
-        for(int i=1;i<dimenCount;i++){
-            axisOffset[i] = axisOffset[i-1]*summatorSize[i];
-            inputAxisOffset[i] = inputAxisOffset[i-1]*inputSize[i];
-        }
-    }
+    MyltidimensionOperation(Vector *summatorSize,Vector *inputSize);
 
-   inline double calc(double *_input,double *_summator,int *point,myltidimensionSymmator summatorFun){
+    inline double calc(double *_input,double *_summator,myltidimensionSymmator summatorFun){
         double *input = _input;
         double *summator = _summator;
         int start = 0;
@@ -63,16 +52,16 @@ public:
         int state=0;
         for(int i=0;i<dimenCount;i++)
         {
-            start+=point[i]*currentDimenStart;
-            currentDimenStart =(i == 0)?inputSize[0]:currentDimenStart*inputSize[i-1];
-            summatorSize*=this->summatorSize[i];
+            start+=offsetPoint[i]*currentDimenStart;
+            currentDimenStart =(i == 0)?(*inputSize)[0]:currentDimenStart*(*inputSize)[i-1];
+            summatorSize*=(*this->summatorSize)[i];
         }
         input+=start;
         for(int i=0;i<summatorSize;i++){
             if(i%axisOffset[0] == 0 && i>0){
                 for(int d=0;d<dimenCount;d++){
                     if(i%axisOffset[d] == 0){
-                        input-=(this->summatorSize[d]-(d==0?0:1))*(d==0?1:inputAxisOffset[d-1]);
+                        input-=(((*this->summatorSize)[d])-(d==0?0:1))*(d==0?1:inputAxisOffset[d-1]);
                         if(i%axisOffset[d+1] != 0){
                             input += inputAxisOffset[d];
                             break;
@@ -90,12 +79,20 @@ public:
         return state;
     }
 
+    void setOffsetPoint(int const*offset){
+        if(offset != NULL && offset != 0){
+            offsetPoint = offset;
+        }
+    }
+
 private:
+    Vector *inputSize;
+    Vector *summatorSize;
     int dimenCount;
-    int *summatorSize;
-    int *inputSize;
     int *axisOffset;
     int *inputAxisOffset;
+    int const*offsetPoint;
+
 
 };
 
