@@ -10,10 +10,15 @@ double SigmodNeuron::activationFunction(double in)
     return 1.0/(1+exp(k*in));
 }
 
-void SigmodNeuron::calculateError(double error)
+double * SigmodNeuron::calculateError(double error)
 {
-    double sigma = -k*currentSignal*(1-currentSignal)*error * learnSpeed;
+    double sigma = k*currentSignal*(1-currentSignal)*error;
+    double wSum=0;
+    for(int i=0;i<=size->getLinerLength();i++) wSum+=weigth[i];
+    for(int i=0;i<size->getLinerLength();i++)
+        this->errors[i] = weigth[i]*sigma/wSum;
+    sigma*=learnSpeed;
     myltidimensionOperation->calc(lastIn,weigth,increaceW,sigma);
     weigth[size->getLinerLength()]+=sigma;
-    sigma;
+    return this->errors;
 }

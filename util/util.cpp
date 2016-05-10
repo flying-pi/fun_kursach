@@ -35,3 +35,14 @@ MyltidimensionOperation::MyltidimensionOperation(Vector *summatorSize, Vector *i
         tempOffsetPoint[i] = 0;
     offsetPoint = tempOffsetPoint;
 }
+
+MyltidimensionOperation::~MyltidimensionOperation()
+{
+
+    delete inputSize;
+    delete summatorSize;
+    delete []axisOffset;
+    delete[] inputAxisOffset;
+    delete []offsetPoint;
+
+}

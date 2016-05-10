@@ -20,6 +20,7 @@ public:
 
      Layer(int outDimenCount
             ,int *outDimen,QObject *parent = 0);
+     ~Layer();
 
     inline Vector const* getInSize(){
         return inSize;
@@ -56,6 +57,8 @@ protected:
     Vector *outSize;
     double *in;
     double *out;
+    double *errors = NULL;
+    double *bufErrors = NULL;
     Layer *parent = NULL;
     Layer *child = NULL;
     QList<Neuron *> *fullConnectedNeurons;

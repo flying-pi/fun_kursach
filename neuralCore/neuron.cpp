@@ -7,6 +7,15 @@ Neuron::Neuron(int dimenCont, int *sizes, QObject *parent) : QObject(parent)
         setSize(new Vector(dimenCont,sizes));
 }
 
+Neuron::~Neuron()
+{
+    delete myltidimensionOperation;
+    delete weigth;
+    delete errors ;
+    delete lastIn;
+    delete lastInOffset;
+}
+
 double Neuron::calcFiled(Vector *inputSize,double *input,const Vector *offset)
 {
     lastIn = input;
@@ -26,13 +35,14 @@ void Neuron::setSize(Vector *size){
     this->size  = size;
     int weigthLenth = size->getLinerLength();
     weigth = new double[weigthLenth+1];
+    errors = new double[weigthLenth];
     for(int i=0;i<weigthLenth+1;i++){
         weigth[i] = Util::getInstance().myRand();
         qDebug()<<weigth[i];
     }
 }
 
-void Neuron::calculateError(double error)
+double *Neuron::calculateError(double error)
 {
-
+    return NULL;
 }

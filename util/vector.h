@@ -6,6 +6,7 @@ class Vector
 {
 public:
     Vector(int dimenCount,int *dimens);
+    ~Vector();
     int operator[](int pos);
     /**
      * @brief getLinerLength

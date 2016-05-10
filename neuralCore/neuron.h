@@ -15,10 +15,21 @@ public:
     Vector const* getSize(){
         return size;
     }
+    virtual ~Neuron();
     virtual double calcFiled(Vector *inputSize, double *input, Vector const* offset = NULL);
 
     void setSize(Vector *size);
-    virtual void calculateError(double error) ;
+
+    void setAdditionalActiavation(double activation){
+        additionalActiavation = activation;
+    }
+
+    /**
+     * @brief calculateError  change weigth by error
+     * @param error error value
+     * @return array of error separateb by weigth
+     */
+    virtual double *calculateError(double error) ;
 
 
 signals:
@@ -30,7 +41,9 @@ protected:
     MyltidimensionOperation *myltidimensionOperation = NULL;
     double currentSumm;
     double currentSignal;
+    double additionalActiavation = 1;
     double *weigth = NULL;
+    double *errors = NULL;
     double *lastIn;
     Vector const *lastInOffset;
 

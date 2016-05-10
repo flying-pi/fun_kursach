@@ -11,6 +11,11 @@ Vector::Vector(int dimenCount, int *dimens){
     this->dimenCount = dimenCount;
 }
 
+Vector::~Vector()
+{
+    delete []dimens;
+}
+
 
 int Vector::operator[](int pos){
     return dimens[pos];

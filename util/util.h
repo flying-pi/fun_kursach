@@ -42,7 +42,7 @@ class MyltidimensionOperation{
 
 public:
     MyltidimensionOperation(Vector *summatorSize,Vector *inputSize);
-
+virtual ~MyltidimensionOperation();
     inline double calc(double *_input,double *_summator,myltidimensionSymmator summatorFun,double state=0){
         double *input = _input;
         double *summator = _summator;
